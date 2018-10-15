@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/tealeg/xlsx"
@@ -103,10 +104,12 @@ func main() {
 		cell.Value = "Email"
 		indexes["Email"] = i
 		for n := range networks {
-			i++
-			cell = row.AddCell()
-			cell.Value = n
-			indexes[n] = i
+			if _, prs := indexes[strings.Title(n)]; !prs {
+				i++
+				cell = row.AddCell()
+				cell.Value = strings.Title(n)
+				indexes[strings.Title(n)] = i
+			}
 		}
 		for _, u := range users {
 			if len(u.SocialProfiles.Socials) > 0 || c.Bool("ignoreEmpty") {
@@ -114,7 +117,7 @@ func main() {
 				cell = row.AddCell()
 				cell.Value = u.Email
 				for _, s := range u.SocialProfiles.Socials {
-					sI := indexes[s.Name]
+					sI := indexes[strings.Title(s.Name)]
 					if len(row.Cells) < sI {
 						l := len(row.Cells)
 						for l <= sI {
