@@ -40,18 +40,22 @@ func main() {
 			Name:   "apiToken, T",
 			Value:  "",
 			EnvVar: "INTERCOM_API_TOKEN",
+			Usage:  "You're intercom API token",
 		},
 		cli.StringFlag{
 			Name:   "logLevel, L",
 			Value:  "info",
 			EnvVar: "INTERCOM_LOG_LEVEL",
+			Usage:  "Define your wanted log level (debug|info|warn|error)",
 		},
 		cli.StringFlag{
 			Name:  "output, O",
 			Value: "IntercomSocials.xlsx",
+			Usage: "Precise the output excel file (wil be overwritten)",
 		},
 		cli.BoolFlag{
-			Name: "ignoreEmpty, I",
+			Name:  "ignoreEmpty, I",
+			Usage: "Allow user without socials to be on output file",
 		},
 	}
 	app.Action = func(c *cli.Context) (err error) {

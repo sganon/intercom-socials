@@ -1,3 +1,4 @@
 intercom-socials
 *.xlsx
 *.xlsx#
+vendor/
